@@ -2,7 +2,10 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path:'',
-    loadChildren: () => import('./app-store/app-store.routes')
-  }
+    path: '',
+    loadChildren: () => import('./app-store/app-store.routes'),
+    data: {
+      renderMode: 'client',
+    },
+  },
 ];

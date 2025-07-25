@@ -5,33 +5,36 @@ import { DetalleProductoComponent } from "./pages/detalle-producto/detalle-produ
 import { CarritoProductoComponent } from "./pages/carrito-producto/carrito-producto.component";
 import { NotfoundPageComponent } from "./pages/notfound-page/notfound-page.component";
 
-export const appStoreRoutes :Routes = [
+export const appStoreRoutes: Routes = [
   {
-    path:'',
+    path: '',
     component: AppStoreLayoutComponent,
     children: [
       {
-        path:'',
-        component: HommeProductsComponent
+        path: '',
+        component: HommeProductsComponent,
       },
       {
-        path:'product/:id',
-        component: DetalleProductoComponent
+        path: 'product/:id',
+        component: DetalleProductoComponent,
+        data: {
+          renderMode: 'client', // 👈 Desactiva el prerendering en esta ruta dinámica
+        },
       },
       {
-        path:'carrito',
-        component: CarritoProductoComponent
+        path: 'carrito',
+        component: CarritoProductoComponent,
       },
       {
-        path:'**',
-        component: NotfoundPageComponent
-      }
-    ]
+        path: '**',
+        component: NotfoundPageComponent,
+      },
+    ],
   },
   {
-    path:'**',
-    redirectTo:''
-  }
-]
+    path: '**',
+    redirectTo: '',
+  },
+];
 
 export default appStoreRoutes
