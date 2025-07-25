@@ -1,0 +1,95 @@
+@if (producto) {
+<div class="w-full" [formGroup] = 'formData'>
+    <div class="w-[90%] sm:w-[60%] lg:w-[90%] xl:w-[70%] mx-auto gap-5 grid grid-cols-1 lg:grid-cols-2 mb-3 lg:py-20">
+      <div class="flex lg:hidden flex-col gap-5">
+          <h1 class="text-3xl lg:text-4xl font-bold">{{producto.nombre}}</h1>
+          <h2 class="text-4xl lg:text-3xl font-bold">{{producto.moneda}}{{producto.precio}}</h2>
+        </div>
+        <div class="w-[90%] mx-auto">
+          <!-- <img src="/img/imgDetalleProduct/no-image.jpg" alt="" class="lg:w-[90%]"> -->
+          <div class="flex flex-col justify-center items-center" >
+            <p-galleria [value]="imagenesGaleria()"  [responsiveOptions]="responsiveOptions" [showThumbnailNavigators]="false" class="bgThumbnail" [containerStyle]="{ 'max-width': '500px'}"
+            [numVisible]="5" [showItemNavigators]="false" [showThumbnails]="true">
+            <ng-template #item let-item>
+              <img [src]="item.itemImageSrc" class="w-full" />
+            </ng-template>
+            <ng-template #thumbnail let-item >
+              <img [src]="item.thumbnailImageSrc" class="w-[80%] mx-auto"  />
+            </ng-template>
+          </p-galleria>
+        </div>
+      </div>
+      <div class="w-full flex flex-col gap-5 lg:p-5">
+        <div class="hidden lg:flex flex-col gap-5">
+          <h1 class="text-4xl font-semibold"> {{producto.nombre}}  </h1>
+          <h2 class="text-3xl font-bold"> {{producto.moneda}}{{producto.precio}} </h2>
+        </div>
+        <p-tag
+        [value]="getValueStock()"
+        [severity]="getValueSeverity()"
+        class="w-max" />
+        <p class="text-xl"> {{producto.descripcion}} </p>
+        <div class="flex flex-col gap-2">
+          <p class="text-2xl font-semibold">Tallas disponibles:</p>
+          <div class="flex flex-row gap-2">
+            @for (item of producto.tallas; track item) {
+              <p-button [label]="item" (onClick)="selectTalla(producto.id!, item)" [outlined]="isOutline(producto.id!, item)" styleClass="scale-80"/>
+            }
+          </div>
+        </div>
+        <p class="text-2xl font-semibold">Cantidad:</p>
+        <div class="flex flex-col md:flex-row gap-3 -mt-1">
+          <!-- <p-button icon="pi pi-cart-minus" label="Agregar" severity="primary" outlined="true" class="hidden md:flex" /> -->
+          <div class="flex">
+            <button pButton pRipple outlined="true" (click)="cambiarCantidad('restar')" type="button"
+              style="border-top-right-radius:0%; border-bottom-right-radius: 0%;">
+              <i class="pi pi-minus text-xl"></i>
+            </button>
+            <input pInputText class="w-[2.8rem] text-center" [readOnly]="true" formControlName="cantidadProducto" type="text"
+              maxlength="2" style="border-radius: 0%;">
+            <button pButton pRipple outlined="true" (click)="cambiarCantidad('sumar')" type="button"
+              style="border-bottom-left-radius: 0%; border-top-left-radius: 0%;">
+              <i class="pi pi-plus text-xl"></i>
+            </button>
+          </div>
+            <p-button icon="pi pi-credit-card" (onClick)="pagarCompra()" [label]="'Pagar ahora:  '+precioFormateado"
+              class="w-full btn-comprar md:flex hidden" styleClass="w-full" [style]="{color: '#ffffff'}" />
+            <p-button [icon]="iconName()?'pi pi-cart-minus':'pi pi-times'" (onClick)="agregarCarrito(producto)" severity="primary"
+              [outlined]="outline()" class="md:flex hidden"/>
+          <div class="flex md:hidden gap-1 mt-3 w-full">
+            <p-button icon="pi pi-credit-card" (onClick)="pagarCompra()" [label]="'Pagar ahora:  '+precioFormateado"
+              class="w-full btn-comprar flex" styleClass="w-full" [style]="{color: '#ffffff'}" />
+            <p-button [icon]="iconName()?'pi pi-cart-minus':'pi pi-times'" (onClick)="agregarCarrito(producto)" severity="primary"
+              [outlined]="outline()" />
+          </div>
+        </div>
+      <p-dialog [showHeader]="false" maskStyleClass="backdrop-blur-sm" [(visible)]="showQR" [modal]="true" class="" [breakpoints]="{ '1200px':'30%', '900px': '50vw', '575px': '80vw' }"
+        [style]="{ width: '25%' }" [draggable]="true" [resizable]="true">
+        <div (click)="pagarCompra()" class="text-end cursor-pointer">
+          <i  class="pi pi-times mt-3" style="font-size: 1rem"></i>
+        </div>
+        <div class="flex flex-col gap-2 -mt-1 text-center">
+          <h1 class="text-2xl font-bold">Scanear con Yape</h1>
+          <h2 class="text-lg font-semibold">Abre tu app Yape y scanea este codigo</h2>
+          <h2 class="text-xl font-bold flex justify-center gap-1">Total a pagar <span class="text-green-400">{{precioFormateado}}</span></h2>
+        </div>
+        <img src="/img/imgDetalleProduct/qrnew.png" class=" mt-1 mx-auto" alt="">
+        <div class="w-full flex justify-center">
+          <a href="https://w.app/yv1iy3" class="w-full flex justify-center">
+            <button pButton pRipple type="button" class="w-[90%] mt-3 font-semibold text-2xl">
+            <i class="pi pi-check-circle mt-1" style="font-size: 1rem"></i>
+            Enviar captura</button>
+          </a>
+        </div>
+      </p-dialog>
+    </div>
+  </div>
+</div>
+}
+
+
+
+
+
+
+

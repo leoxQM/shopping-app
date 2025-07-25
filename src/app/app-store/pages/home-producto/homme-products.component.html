@@ -1,0 +1,19 @@
+<div class="w-[90%] md:w-[80%] mx-auto mt-10 mb-3">
+  <h1 class="font-bold text-3xl">Productos</h1>
+</div>
+<div>
+  <app-product-card
+    [product]="pagedProducts()"
+    (productoSeleccionado)="O_SelectProduct($event)"
+    (productoCarrito)="O_AddToCar($event)"/>
+</div>
+<div class="w-full xl:w-[24.8%] mx-auto -mt-5">
+  <p-paginator
+    [first]="first()"
+    [rows]="rows()"
+    [totalRecords]="allProducts().length"
+    [rowsPerPageOptions]="[6, 12, 18]"
+    (onPageChange)="onPageChange($event)"
+  />
+</div>
+

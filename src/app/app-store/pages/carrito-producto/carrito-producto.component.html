@@ -1,0 +1,185 @@
+<!-- diseño PC -->
+<div class="xl:flex xl:justify-between xl:w-[70%] xl:mx-auto pt-16 hidden">
+  <div class="h-[78vh] w-full overflow-y-auto custom-scroll">
+    @for (item of products(); track item; let i = $index) {
+    <div class="card 2xl:w-[46rem] flex flex-col mb-5">
+      <div class="grid grid-cols-12">
+        <div class="col-span-12">
+          <div
+            class="flex sm:items-center p-4 gap-4  bgProductCar rounded-2xl shadow-md lg:hover:shadow-lg transition-shadow duration-300 bg-white">
+            <div class="md:w-40 relative">
+              <img class="block mx-auto rounded-lg w-full" [src]="item.imagen"
+                [alt]="item.nombre" />
+              <p-tag [value]="getStockStatus(item.stock!)" [severity]="getSeverity(item.stock!)"
+                class="absolute top-1 left-1" />
+            </div>
+            <div class="flex justify-between flex-1 gap-6">
+              <div class="flex flex-col gap-1">
+                <h2 [routerLink]="['/product', item.id]" class="text-2xl text-green-600 font-semibold cursor-pointer">{{
+                  item.nombre }}</h2>
+                <p class="text-base">{{ item.descripcion }}</p>
+                <div class="mt-1">
+                  <h2 class="text-xl font-semibold">Talla:</h2>
+                  @for (talla of item.tallas ?? []; track talla) {
+                  <p-button [label]="talla" (onClick)="selectTalla(item.id!, talla)" severity="success"
+                    [outlined]="isOutline(item.id!, talla)" styleClass="scale-80" />
+                  }
+                </div>
+              </div>
+
+              <div class="flex flex-col md:items-end gap-4">
+                <span class="text-xl font-bold text-surface-900">
+                  {{ item.moneda || 'S/' }}{{ item.precio }}
+                </span>
+                <div [formGroup]="formGroup" class="flex flex-row-reverse md:flex-row gap-2">
+                  <p-button icon="pi pi-trash" (onClick)="removeProduct(item.id!)" [outlined]="false" />
+                  <div formArrayName="items" class="card flex justify-center gap-2 mt-1">
+                    <div class="flex" [formGroupName]="i">
+                      <button pButton pRipple (click)="cambiarCantidad('Restar', i)" outlined="true" type="button"
+                        style="border-top-right-radius:0%; border-bottom-right-radius: 0%;">
+                        <i class="pi pi-minus text-xl"></i>
+                      </button>
+                      <input pInputText class="w-[2.8rem] text-center" [readOnly]="true"
+                        formControlName="cantidadProducto" type="text" maxlength="2" style="border-radius: 0%;">
+                      <button pButton pRipple (click)="cambiarCantidad('Sumar', i)" outlined="true" type="button"
+                        style="border-bottom-left-radius: 0%; border-top-left-radius: 0%;">
+                        <i class="pi pi-plus text-xl"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }@empty {
+    <div class="text-center text-gray-500">
+      <p>No hay productos en el carrito.</p>
+    </div>
+    }
+  </div>
+  @if (products().length>0) {
+  <div class="flex flex-col w-[50%] ml-10 gap-4">
+    <div class="flex justify-between">
+      <h2 class="font-bold text-2xl">Subtotal</h2>
+      <h2 class="font-bold text-2xl"> S/{{precioxProducto().toLocaleString('en-US', {minimumFractionDigits: 2,
+        maximumFractionDigits: 2})}} </h2>
+    </div>
+    <div class="flex justify-between">
+      <h2 class="font-bold text-2xl">Envio</h2>
+      <h2 class="font-bold text-2xl">S/0</h2>
+    </div>
+    <p class="w-full h-0.5 bg-gray-300"></p>
+    <div class="flex justify-between">
+      <h2 class="font-bold text-2xl">Total</h2>
+      <h2 class="font-bold text-2xl"> S/{{precioxProducto().toLocaleString('en-US', {minimumFractionDigits: 2,
+        maximumFractionDigits: 2})}} </h2>
+    </div>
+    <button pButton pRipple (click)="pagarCompra()" class=" py-3 text-4xl font-bold rounded-md rounded-r-none">
+      <p class="text-2xl text-white">Pagar ahora (S/ {{precioxProducto().toLocaleString('en-US', {minimumFractionDigits:
+        2,
+        maximumFractionDigits: 2})}})
+      </p>
+    </button>
+  </div>
+  }
+</div>
+
+<!-- diseño móvil -->
+<div class="flex flex-col xl:hidden relative">
+@for (item of products(); track item.id; let i = $index) {
+  <div class="card  w-[90%] md:w-[70%] lg:w-[50%] bgProductCar bg-white rounded-2xl m-4 mx-auto mb-5">
+    <h1 [routerLink]="['/product', item.id]" class="text-2xl text-green-600 font-bold m-3 cursor-pointer"> {{item.nombre}} </h1>
+    <div class="flex justify-between w-full m-3">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-3xl font-bold"> S/{{item.precio}} </h2>
+        <div class="mt-2">
+          <h2 class="text-xl font-semibold">Talla:</h2>
+          @for (talla of item.tallas ?? []; track talla) {
+            <p-button [label]="talla" (onClick)="selectTalla(item.id!, talla)" severity="success" [outlined]="isOutline(item.id!, talla)" styleClass="scale-80"/>
+          }
+        </div>
+        <div class="" [formGroup]="formGroup">
+          <h2 class="text-xl font-semibold">Cantidad:</h2>
+          <div formArrayName="items" class="card flex justify-center gap-2 mt-1">
+            <div class="flex" [formGroupName]="i">
+              <button pButton pRipple (click)="cambiarCantidad('Restar', i)" outlined="true" type="button" style="border-top-right-radius:0%; border-bottom-right-radius: 0%;">
+                <i class="pi pi-minus text-xl"></i>
+              </button>
+              <input pInputText class="w-[2.8rem] text-center" [readOnly]="true" formControlName="cantidadProducto" type="text" maxlength="2" style="border-radius: 0%;">
+              <button pButton pRipple (click)="cambiarCantidad('Sumar', i)" outlined="true" type="button" style="border-bottom-left-radius: 0%; border-top-left-radius: 0%;">
+                <i class="pi pi-plus text-xl"></i>
+              </button>
+            </div>
+            <p-button icon="pi pi-trash" (onClick)="removeProduct(item.id!)" [outlined]="false" />
+        </div>
+      </div>
+    </div>
+    <div class="w-full h-full object-cover flex justify-center sm:ml-20">
+      <img [src]="item.imagen" class="w-[70%] sm:w-[40%] mt-5" alt="">
+    </div>
+  </div>
+</div>
+<div class="fixed bottom-0 left-5 w-[90%] md:w-[70%] lg:w-[50%] md:left-[15%] lg:left-[25%] flex gap-[1px]">
+  <button
+    pButton pRipple (click)="pagarCompra()" class="flex-1 py-3 text-4xl font-bold rounded-md rounded-r-none"
+  >
+    <p class="text-lg text-white">Pagar ahora (S/ {{precioxProducto().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}})
+</p>
+</button>
+  <button
+    pButton pRipple class="px-4 btnPagar py-3 rounded-md rounded-l-none"
+    (click)="verResumen = true"
+  >
+    <i class="pi pi-chevron-up text-xl text-white"></i>
+  </button>
+</div>
+<p-drawer header="Precio de compra" [(visible)]="verResumen" position="bottom" [style]="{ height: 'auto' }">
+  <div class="flex flex-col gap-2 px-1">
+    <div class="flex justify-between">
+      <h2 class="font-bold text-2xl">Subtotal</h2>
+      <h2 class="font-bold text-2xl"> S/{{precioxProducto().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}} </h2>
+    </div>
+    <div class="flex justify-between">
+      <h2 class="font-bold text-2xl">Envio</h2>
+      <h2 class="font-bold text-2xl">S/0</h2>
+    </div>
+    <p class="w-full h-0.5 bg-gray-300"></p>
+    <div class="flex justify-between">
+      <h2 class="font-bold text-2xl">Total</h2>
+      <h2 class="font-bold text-2xl"> S/{{precioxProducto().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}} </h2>
+    </div>
+  </div>
+</p-drawer>
+}@empty {
+  <div class="text-center text-gray-500">
+    <p>No hay productos en el carrito.</p>
+  </div>
+}
+</div>
+
+<p-dialog [showHeader]="false" maskStyleClass="backdrop-blur-sm" [(visible)]="showQR" [modal]="true" class=""
+  [breakpoints]="{ '1200px':'30%', '900px': '50vw', '575px': '80vw' }" [style]="{ width: '25%' }" [draggable]="true"
+  [resizable]="true">
+  <div (click)="pagarCompra()" class="text-end cursor-pointer">
+    <i class="pi pi-times mt-3" style="font-size: 1rem"></i>
+  </div>
+  <div class="flex flex-col gap-2 -mt-1 text-center">
+    <h1 class="text-2xl font-bold">Scanea con Yape</h1>
+    <h2 class="text-lg font-semibold">Abre tu app Yape y scanea este codigo</h2>
+    <h2 class="text-xl font-bold flex justify-center gap-1">Total a pagar <span
+        class="text-green-400">S/{{precioxProducto().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}}</span></h2>
+  </div>
+  <img src="/img/imgDetalleProduct/qrnew.png" class=" mt-1 mx-auto" alt="">
+  <div class="w-full flex justify-center">
+    <a href="https://w.app/yv1iy3" class="w-full flex justify-center">
+      <button pButton pRipple type="button" class="w-[90%] mt-3 font-semibold text-2xl">
+        <i class="pi pi-check-circle mt-1" style="font-size: 1rem"></i>
+        Enviar captura</button>
+    </a>
+  </div>
+</p-dialog>
+
+

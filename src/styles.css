@@ -1,1 +1,74 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@import "primeicons/primeicons.css";
+
+body {
+  background-color: #eff3f7;
+}
+
+.bgNavbar {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.solo-botones input {
+  pointer-events: none !important;
+}
+
+p-galleria .p-galleria-thumbnails-content{
+  background-color: #eff3f7;
+}
+
+p-paginator .p-paginator{
+  background-color: #eff3f7;
+}
+
+p-galleria .p-galleria {
+  border-style: none;
+}
+
+p-button .btnPagar{
+  border-right: none !important;
+}
+.p-drawer .p-drawer-header .p-drawer-title {
+  color: #289c4b;
+  font-weight: bold;
+}
+
+p-inputnumber input .p-inputtext{
+  pointer-events: none !important;
+}
+
+p-splitbutton .p-splitbutton-button {
+  width: 100% !important;
+}
+
+.my-app-dark p-dialog .p-dialog{
+ background-color: #2d3b4f;
+}
+
+.my-app-dark .bgNavbar {
+  background-color: #2d3b4f;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.my-app-dark p-galleria .p-galleria-thumbnails-content{
+  background-color: #1b2a3f;
+  border: none;
+}
+
+.my-app-dark body {
+  background-color: #1b2a3f; /* o lo que prefieras */
+}
+.my-app-dark p-card .p-card-body{
+  background-color: #2d3b4f;
+}
+.my-app-dark p-paginator .p-paginator{
+  background-color: #1b2a3f;
+}
+.my-app-dark .bgProductCar{
+  background-color: #2d3b4f;
+  border-color: #1e293b;
+  box-shadow: #8b9ab5;
+}
+
