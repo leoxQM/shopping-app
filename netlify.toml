@@ -1,6 +1,0 @@
-[build]
-command = "npm run prerender"
-publish = "dist/app-store/browser"
-
-[[plugins]]
-package = "@netlify/angular-runtime"
