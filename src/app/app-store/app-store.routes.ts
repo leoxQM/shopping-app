@@ -16,8 +16,7 @@ export const appStoreRoutes: Routes = [
       },
       {
         path: 'product/:id',
-        component: DetalleProductoComponent,
-        data: { renderMode: 'client' }
+        component: DetalleProductoComponent
       },
       {
         path: 'carrito',

@@ -17,8 +17,6 @@ export const appConfig: ApplicationConfig = {
         provideHttpClient(
           withFetch(),
           withInterceptors([
-          //loggingInterceptor,
-          //authInterceptor,
          ])
         ),
         provideClientHydration(withEventReplay()),
@@ -31,6 +29,5 @@ export const appConfig: ApplicationConfig = {
               }
             }
         }),
-      //MessageService,
   ]
 };
