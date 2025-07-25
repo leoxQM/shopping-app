@@ -17,9 +17,7 @@ export const appStoreRoutes: Routes = [
       {
         path: 'product/:id',
         component: DetalleProductoComponent,
-        data: {
-          renderMode: 'client', // 👈 Desactiva el prerendering en esta ruta dinámica
-        },
+        data: { renderMode: 'client' }
       },
       {
         path: 'carrito',
