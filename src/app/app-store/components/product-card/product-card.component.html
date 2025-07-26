@@ -1,26 +1,41 @@
 
-<div class="mb-4 md:px-10 py-5 w-[90%] xl:w-[85%] mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-13">
+<h1 class="sr-only">Listado de productos en venta</h1>
+<div class="mb-4 md:px-10 py-5 w-[90%] xl:w-[85%] mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
   @for (product of product(); track product) {
-    <p-card class="flex relative justify-center items-center cursor-pointer transition-transform duration-200 lg:hover:scale-[1.02] lg:hover:shadow-lg rounded" [style]="{ width: '27rem', height:'auto', overflow: 'hidden' }">
-      <ng-template #header>
-        <div class="relative h-[220px] min-w-auto overflow-hidden">
-          <img [alt]="product.nombre" class="w-full h-full object-cover" [src]="product.imagen" />
-          <p-tag
-          [value]="product.stock! > 10 ? 'Disponible' : (product.stock! > 0 ? 'Pocas unidades' : 'Agotado')"
-          [severity]="getSeverity(product.stock! > 10 ? 'INSTOCK' : (product.stock! > 0 ? 'LOWSTOCK' : 'OUTOFSTOCK'))"
-          class="absolute top-2 left-2" />
-        </div>
-      </ng-template>
-      <ng-template #title> <p [routerLink]="['/product', product.id]" class="md:hover:text-green-300">{{product.nombre}}</p>  </ng-template>
-      <ng-template #subtitle> <p class="font-semibold text-2xl">S/{{product.precio}}</p> </ng-template>
-      <ng-template #footer>
-        <div class="flex gap-5">
-          <p-button [icon]="getBotonInfo(product.id!).icon" (onClick)="agregarCarrito(product, product.id!)" [outlined]="isOutline(product.id!)" [label]="getBotonInfo(product.id!).label" severity="primary" class="hidden md:flex min-w-[100px]" />
-          <p-button [icon]="getBotonInfo(product.id!).icon" (onClick)="agregarCarrito(product, product.id!)" [outlined]="isOutline(product.id!)" severity="primary" class="flex md:hidden" />
-          <p-button label="Ver detalles" (onClick)="selectProduct(product)" class="w-full" styleClass="w-full" />
-        </div>
-      </ng-template>
-    </p-card>
+    <article>
+      <p-card
+        class="flex relative justify-center items-center cursor-pointer transition-transform duration-200 lg:hover:scale-[1.02] lg:hover:shadow-lg rounded"
+        [style]="{ width: '27rem', height:'auto', overflow: 'hidden' }">
+        <ng-template #header>
+          <div class="relative h-[220px] min-w-auto overflow-hidden">
+            <img [alt]="product.nombre" loading="lazy" class="w-full h-full object-cover" [src]="product.imagen" />
+            <p-tag [value]="product.stock! > 10 ? 'Disponible' : (product.stock! > 0 ? 'Pocas unidades' : 'Agotado')"
+              [severity]="getSeverity(product.stock! > 10 ? 'INSTOCK' : (product.stock! > 0 ? 'LOWSTOCK' : 'OUTOFSTOCK'))"
+              class="absolute top-2 left-2" />
+          </div>
+        </ng-template>
+        <ng-template #title>
+          <h2 class="text-lg font-semibold">
+            <a [routerLink]="['/product', product.id]" class="md:hover:text-green-300">
+              {{ product.nombre }}
+            </a>
+          </h2>
+        </ng-template>
+        <ng-template #subtitle>
+          <p class="font-semibold text-2xl">S/{{product.precio}}</p>
+        </ng-template>
+        <ng-template #footer>
+          <div class="flex gap-5">
+            <p-button [icon]="getBotonInfo(product.id!).icon" (onClick)="agregarCarrito(product, product.id!)"
+              [outlined]="isOutline(product.id!)" [label]="getBotonInfo(product.id!).label" severity="primary"
+              class="hidden md:flex min-w-[100px]" [attr.aria-label]="getBotonInfo(product.id!).label"/>
+            <p-button [icon]="getBotonInfo(product.id!).icon" (onClick)="agregarCarrito(product, product.id!)"
+              [outlined]="isOutline(product.id!)" severity="primary" class="flex md:hidden" [attr.aria-label]="getBotonInfo(product.id!).label"/>
+            <p-button label="Ver detalles" (onClick)="selectProduct(product)" class="w-full" styleClass="w-full" [attr.aria-label]="getBotonInfo(product.id!).label"/>
+          </div>
+        </ng-template>
+      </p-card>
+    </article>
   }
 </div>
 

@@ -8,7 +8,7 @@
           <div
             class="flex sm:items-center p-4 gap-4  bgProductCar rounded-2xl shadow-md lg:hover:shadow-lg transition-shadow duration-300 bg-white">
             <div class="md:w-40 relative">
-              <img class="block mx-auto rounded-lg w-full" [src]="item.imagen"
+              <img loading="lazy" class="block mx-auto rounded-lg w-full" [src]="item.imagen"
                 [alt]="item.nombre" />
               <p-tag [value]="getStockStatus(item.stock!)" [severity]="getSeverity(item.stock!)"
                 class="absolute top-1 left-1" />
@@ -105,11 +105,11 @@
           <h2 class="text-xl font-semibold">Cantidad:</h2>
           <div formArrayName="items" class="card flex justify-center gap-2 mt-1">
             <div class="flex" [formGroupName]="i">
-              <button pButton pRipple (click)="cambiarCantidad('Restar', i)" outlined="true" type="button" style="border-top-right-radius:0%; border-bottom-right-radius: 0%;">
+              <button pButton pRipple (click)="cambiarCantidad('Restar', i)" outlined="true" aria-label="Reducir cantidad" type="button" style="border-top-right-radius:0%; border-bottom-right-radius: 0%;">
                 <i class="pi pi-minus text-xl"></i>
               </button>
               <input pInputText class="w-[2.8rem] text-center" [readOnly]="true" formControlName="cantidadProducto" type="text" maxlength="2" style="border-radius: 0%;">
-              <button pButton pRipple (click)="cambiarCantidad('Sumar', i)" outlined="true" type="button" style="border-bottom-left-radius: 0%; border-top-left-radius: 0%;">
+              <button pButton pRipple (click)="cambiarCantidad('Sumar', i)" outlined="true" aria-label="Aumentar cantidad" type="button" style="border-bottom-left-radius: 0%; border-top-left-radius: 0%;">
                 <i class="pi pi-plus text-xl"></i>
               </button>
             </div>
@@ -118,7 +118,7 @@
       </div>
     </div>
     <div class="w-full h-full object-cover flex justify-center sm:ml-20">
-      <img [src]="item.imagen" class="w-[70%] sm:w-[40%] mt-5" alt="">
+      <img loading="lazy" [src]="item.imagen" class="w-[70%] sm:w-[40%] mt-5" alt="">
     </div>
   </div>
 </div>
@@ -172,7 +172,7 @@
     <h2 class="text-xl font-bold flex justify-center gap-1">Total a pagar <span
         class="text-green-400">S/{{precioxProducto().toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}}</span></h2>
   </div>
-  <img src="/img/imgDetalleProduct/qrnew.png" class=" mt-1 mx-auto" alt="">
+  <img src="/img/imgDetalleProduct/qrnew.webp" class=" mt-1 mx-auto" alt="">
   <div class="w-full flex justify-center">
     <a href="https://w.app/yv1iy3" class="w-full flex justify-center">
       <button pButton pRipple type="button" class="w-[90%] mt-3 font-semibold text-2xl">

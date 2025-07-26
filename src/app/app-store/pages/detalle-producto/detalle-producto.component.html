@@ -1,5 +1,6 @@
+<h1 class="sr-only">Detalle del producto {{producto.nombre}}</h1>
 @if (producto) {
-<div class="w-full" [formGroup] = 'formData'>
+<div class="w-full">
     <div class="w-[90%] sm:w-[60%] lg:w-[90%] xl:w-[70%] mx-auto gap-5 grid grid-cols-1 lg:grid-cols-2 mb-3 lg:py-20">
       <div class="flex lg:hidden flex-col gap-5">
           <h1 class="text-3xl lg:text-4xl font-bold">{{producto.nombre}}</h1>
@@ -11,10 +12,10 @@
             <p-galleria [value]="imagenesGaleria()"  [responsiveOptions]="responsiveOptions" [showThumbnailNavigators]="false" class="bgThumbnail" [containerStyle]="{ 'max-width': '500px'}"
             [numVisible]="5" [showItemNavigators]="false" [showThumbnails]="true">
             <ng-template #item let-item>
-              <img [src]="item.itemImageSrc" class="w-full" />
+              <img [src]="item.itemImageSrc" [alt]="item.nombre" loading="lazy" class="w-full" />
             </ng-template>
             <ng-template #thumbnail let-item >
-              <img [src]="item.thumbnailImageSrc" class="w-[80%] mx-auto"  />
+              <img [src]="item.thumbnailImageSrc" [alt]="item.nombre" loading="lazy" class="w-[80%] mx-auto"  />
             </ng-template>
           </p-galleria>
         </div>
@@ -33,7 +34,7 @@
           <p class="text-2xl font-semibold">Tallas disponibles:</p>
           <div class="flex flex-row gap-2">
             @for (item of producto.tallas; track item) {
-              <p-button [label]="item" (onClick)="selectTalla(producto.id!, item)" [outlined]="isOutline(producto.id!, item)" styleClass="scale-80"/>
+              <p-button [label]="item" aria-label="Elegir talla" (onClick)="selectTalla(producto.id!, item)" [outlined]="isOutline(producto.id!, item)" styleClass="scale-80"/>
             }
           </div>
         </div>
@@ -41,29 +42,31 @@
         <div class="flex flex-col md:flex-row gap-3 -mt-1">
           <!-- <p-button icon="pi pi-cart-minus" label="Agregar" severity="primary" outlined="true" class="hidden md:flex" /> -->
           <div class="flex">
-            <button pButton pRipple outlined="true" (click)="cambiarCantidad('restar')" type="button"
+            <button pButton pRipple outlined="true" aria-label="Disminuir cantidad" (click)="cambiarCantidad('restar')" type="button"
               style="border-top-right-radius:0%; border-bottom-right-radius: 0%;">
               <i class="pi pi-minus text-xl"></i>
             </button>
-            <input pInputText class="w-[2.8rem] text-center" [readOnly]="true" formControlName="cantidadProducto" type="text"
-              maxlength="2" style="border-radius: 0%;">
-            <button pButton pRipple outlined="true" (click)="cambiarCantidad('sumar')" type="button"
+            <form [formGroup] = 'formData'>
+              <input pInputText class="w-[2.8rem] text-center" [readOnly]="true" formControlName="cantidadProducto" type="text"
+                maxlength="2" style="border-radius: 0%;">
+            </form>
+            <button pButton pRipple outlined="true" aria-label="Aumentar cantidad" (click)="cambiarCantidad('sumar')" type="button"
               style="border-bottom-left-radius: 0%; border-top-left-radius: 0%;">
               <i class="pi pi-plus text-xl"></i>
             </button>
           </div>
-            <p-button icon="pi pi-credit-card" (onClick)="pagarCompra()" [label]="'Pagar ahora:  '+precioFormateado"
+            <p-button icon="pi pi-credit-card" (onClick)="pagarCompra()" aria-label="Pagar ahora" [label]="'Pagar ahora:  '+precioFormateado"
               class="w-full btn-comprar md:flex hidden" styleClass="w-full" [style]="{color: '#ffffff'}" />
-            <p-button [icon]="iconName()?'pi pi-cart-minus':'pi pi-times'" (onClick)="agregarCarrito(producto)" severity="primary"
+            <p-button [icon]="iconName()?'pi pi-cart-minus':'pi pi-times'" aria-label="Agregar al carrito" (onClick)="agregarCarrito(producto)" severity="primary"
               [outlined]="outline()" class="md:flex hidden"/>
           <div class="flex md:hidden gap-1 mt-3 w-full">
-            <p-button icon="pi pi-credit-card" (onClick)="pagarCompra()" [label]="'Pagar ahora:  '+precioFormateado"
+            <p-button icon="pi pi-credit-card" aria-label="Pagar ahora" (onClick)="pagarCompra()" [label]="'Pagar ahora:  '+precioFormateado"
               class="w-full btn-comprar flex" styleClass="w-full" [style]="{color: '#ffffff'}" />
-            <p-button [icon]="iconName()?'pi pi-cart-minus':'pi pi-times'" (onClick)="agregarCarrito(producto)" severity="primary"
+            <p-button [icon]="iconName()?'pi pi-cart-minus':'pi pi-times'" aria-label="Agregar al carrito" (onClick)="agregarCarrito(producto)" severity="primary"
               [outlined]="outline()" />
           </div>
         </div>
-      <p-dialog [showHeader]="false" maskStyleClass="backdrop-blur-sm" [(visible)]="showQR" [modal]="true" class="" [breakpoints]="{ '1200px':'30%', '900px': '50vw', '575px': '80vw' }"
+      <p-dialog [showHeader]="false" maskStyleClass="backdrop-blur-sm" aria-label="Diálogo de pago QR" [(visible)]="showQR" [modal]="true" class="" [breakpoints]="{ '1200px':'30%', '900px': '50vw', '575px': '80vw' }"
         [style]="{ width: '25%' }" [draggable]="true" [resizable]="true">
         <div (click)="pagarCompra()" class="text-end cursor-pointer">
           <i  class="pi pi-times mt-3" style="font-size: 1rem"></i>
@@ -73,10 +76,10 @@
           <h2 class="text-lg font-semibold">Abre tu app Yape y scanea este codigo</h2>
           <h2 class="text-xl font-bold flex justify-center gap-1">Total a pagar <span class="text-green-400">{{precioFormateado}}</span></h2>
         </div>
-        <img src="/img/imgDetalleProduct/qrnew.png" class=" mt-1 mx-auto" alt="">
+        <img src="/img/imgDetalleProduct/qrnew.webp" loading="lazy" class=" mt-1 mx-auto" alt="">
         <div class="w-full flex justify-center">
           <a href="https://w.app/yv1iy3" class="w-full flex justify-center">
-            <button pButton pRipple type="button" class="w-[90%] mt-3 font-semibold text-2xl">
+            <button pButton pRipple type="button" aria-label="Pago con QR" class="w-[90%] mt-3 font-semibold text-2xl">
             <i class="pi pi-check-circle mt-1" style="font-size: 1rem"></i>
             Enviar captura</button>
           </a>

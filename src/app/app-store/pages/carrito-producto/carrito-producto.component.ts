@@ -42,8 +42,11 @@ export class CarritoProductoComponent implements OnInit {
   verResumen: boolean = false;
   sumaPrecio: number = 0;
   showQR = signal<boolean>(false);
+  private _cachedTotal = 0;
+  private _prevState = '';
 
   products = computed(() => this.carritoService.productos());
+  precioProducto = computed(()=>{})
 
   constructor() {}
 
@@ -112,13 +115,19 @@ export class CarritoProductoComponent implements OnInit {
   }
 
   precioxProducto(): number {
-    return this.itemsForm.controls.reduce((total, group) => {
+    const estadoActual = JSON.stringify(this.itemsForm.getRawValue());
+    if (estadoActual === this._prevState) return this._cachedTotal;
+
+    this._prevState = estadoActual;
+    this._cachedTotal = this.itemsForm.controls.reduce((total, group) => {
       const cantidad = group.get('cantidadProducto')?.value || 1;
       const id = group.get('id')?.value;
       const producto = this.products().find((p) => p.id === id);
       const precio = producto?.precio || 0;
       return total + cantidad * precio;
     }, 0);
+
+    return this._cachedTotal;
   }
 
   get itemsForm(): FormArray {

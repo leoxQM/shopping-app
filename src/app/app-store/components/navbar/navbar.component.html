@@ -1,21 +1,23 @@
 <div class="w-full">
   <div class="w-[90%] my-6 md:w-[70%] flex justify-between items-center mx-auto">
-    <div class="text-2xl font-bold cursor-pointer text-current border-0 focus:outline-none focus:ring-0" routerLink="/">Shoping <span class="text-green-500">App</span></div>
-    <div class="flex gap-5" [formGroup] ="formGroup">
+    <div class="text-2xl font-bold cursor-pointer text-current border-0 focus:outline-none focus:ring-0" routerLink="/">Shopping <span class="text-green-500">App</span></div>
+    <div class="flex gap-5">
       <div class="card flex justify-center items-center gap-4">
-        <p-toggleswitch formControlName="checked" styleClass="scale-155 mt-2">
-          <ng-template #handle let-checked="checked">
-            <i [ngClass]="['!text-xs', 'pi', !checked ? 'pi-moon' : 'pi-sun']"></i>
-          </ng-template>
-        </p-toggleswitch>
+        <label class="sr-only" for="themeToggle">Cambiar tema claro/oscuro</label>
+        <form [formGroup] ="formGroup">
+          <p-toggleswitch formControlName="checked" styleClass="scale-155 mt-2">
+            <ng-template #handle let-checked="checked">
+              <i [ngClass]="['!text-xs', 'pi', !checked ? 'pi-moon' : 'pi-sun']"></i>
+            </ng-template>
+          </p-toggleswitch>
+        </form>
       </div>
       @if (cantidadProductos() > 0) {
         <p-overlayBadge [value]="cantidadProductos()" severity="danger" class="inline-flex">
-          <p-button icon="pi pi-cart-minus" routerLink="/carrito" />
+          <p-button icon="pi pi-cart-minus" routerLink="/carrito" aria-label="Ir al carrito"/>
         </p-overlayBadge>
       } @else {
-        <p-button icon="pi pi-cart-minus" routerLink="/carrito" />
-
+        <p-button icon="pi pi-cart-minus" routerLink="/carrito" aria-label="Ir al carrito"/>
       }
     </div>
   </div>

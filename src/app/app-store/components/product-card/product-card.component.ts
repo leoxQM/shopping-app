@@ -14,6 +14,7 @@ import { Ripple } from 'primeng/ripple';
 import { MessageService } from 'primeng/api';
 import { ToastService } from '../../../@core/servicios/messageService';
 import { mensajes } from '../../../@core/constantes/constantes';
+import { NgClass } from '@angular/common';
 
 
 @Component({

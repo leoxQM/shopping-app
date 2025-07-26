@@ -9,6 +9,7 @@ import { NgClass } from '@angular/common';
 import { AvatarModule } from 'primeng/avatar';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { CarritoService } from '../../../@core/servicios/carrito.service';
+import { Tooltip } from 'primeng/tooltip';
 @Component({
   selector: 'app-navbar',
   imports: [

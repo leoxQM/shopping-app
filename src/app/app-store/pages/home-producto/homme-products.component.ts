@@ -13,9 +13,10 @@ import { CarritoService } from '../../../@core/servicios/carrito.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ToastService } from '../../../@core/servicios/messageService';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 @Component({
   selector: 'app-homme-products',
-  imports: [ProductCardComponent, PaginatorModule, CommonModule],
+  imports: [ProductCardComponent, PaginatorModule, CommonModule, NavbarComponent],
   templateUrl: './homme-products.component.html',
   styleUrl: './homme-products.component.css',
 })
