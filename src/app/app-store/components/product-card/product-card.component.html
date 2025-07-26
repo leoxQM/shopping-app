@@ -8,7 +8,8 @@
         [style]="{ width: '27rem', height:'auto', overflow: 'hidden' }">
         <ng-template #header>
           <div class="relative h-[220px] min-w-auto overflow-hidden">
-            <img [alt]="product.nombre" loading="lazy" class="w-full h-full object-cover" [src]="product.imagen" />
+            <img [alt]="product.nombre" fetchpriority="high" loading="eager" decoding="async" class="w-full h-full object-cover"
+              [src]="product.imagen" />
             <p-tag [value]="product.stock! > 10 ? 'Disponible' : (product.stock! > 0 ? 'Pocas unidades' : 'Agotado')"
               [severity]="getSeverity(product.stock! > 10 ? 'INSTOCK' : (product.stock! > 0 ? 'LOWSTOCK' : 'OUTOFSTOCK'))"
               class="absolute top-2 left-2" />
