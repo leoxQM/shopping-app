@@ -2,7 +2,7 @@
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
 
-@font-face {
+/* @font-face {
   font-family: 'Poppins';
   src: url('/assets/fonts/Poppins-Bold.ttf') format('truetype');
   font-weight: 700;
@@ -13,12 +13,12 @@
   src: url('/assets/fonts/Poppins-Regular.ttf') format('truetype');
   font-weight: 400;
   font-display: swap;
-}
+} */
 
 
 body {
   background-color: #eff3f7;
-  font-family: 'Poppins', sans-serif;
+  /* font-family: 'Poppins', sans-serif; */
 }
 
 .bgNavbar {
