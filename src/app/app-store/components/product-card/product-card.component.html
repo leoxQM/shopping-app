@@ -31,8 +31,8 @@
               [outlined]="isOutline(product.id!)" [label]="getBotonInfo(product.id!).label" severity="primary"
               class="hidden md:flex min-w-[100px]" [attr.aria-label]="getBotonInfo(product.id!).label"/>
             <p-button [icon]="getBotonInfo(product.id!).icon" (onClick)="agregarCarrito(product, product.id!)"
-              [outlined]="isOutline(product.id!)" severity="primary" class="flex md:hidden" [attr.aria-label]="getBotonInfo(product.id!).label"/>
-            <p-button label="Ver detalles" (onClick)="selectProduct(product)" class="w-full" styleClass="w-full" [attr.aria-label]="getBotonInfo(product.id!).label"/>
+              [outlined]="isOutline(product.id!)" severity="primary" class="flex md:hidden"/>
+            <p-button label="Ver detalles" (onClick)="selectProduct(product)" class="w-full" styleClass="w-full"/>
           </div>
         </ng-template>
       </p-card>

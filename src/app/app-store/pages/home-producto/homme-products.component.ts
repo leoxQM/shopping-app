@@ -16,7 +16,7 @@ import { ToastService } from '../../../@core/servicios/messageService';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 @Component({
   selector: 'app-homme-products',
-  imports: [ProductCardComponent, PaginatorModule, CommonModule, NavbarComponent],
+  imports: [ProductCardComponent, PaginatorModule, CommonModule],
   templateUrl: './homme-products.component.html',
   styleUrl: './homme-products.component.css',
 })

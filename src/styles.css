@@ -2,23 +2,33 @@
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
 
-/* @font-face {
+@font-face {
   font-family: 'Poppins';
-  src: url('/assets/fonts/Poppins-Bold.ttf') format('truetype');
+  src: url('/fonts/Poppins-Bold.ttf') format('truetype');
   font-weight: 700;
   font-display: swap;
 }
 @font-face {
   font-family: 'Poppins';
-  src: url('/assets/fonts/Poppins-Regular.ttf') format('truetype');
+  src: url('/fonts/Poppins-Regular.ttf') format('truetype');
   font-weight: 400;
   font-display: swap;
-} */
+}
+
+@font-face {
+  font-family: 'primeicons';
+  font-display: swap;
+  src: url('/fonts/primeicons.woff2') format('woff2'),
+       url('/fonts/primeicons.woff') format('woff'),
+       url('/fonts/primeicons.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 
 body {
   background-color: #eff3f7;
-  /* font-family: 'Poppins', sans-serif; */
+  font-family: 'Poppins', sans-serif;
 }
 
 .bgNavbar {
