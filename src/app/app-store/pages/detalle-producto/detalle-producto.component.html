@@ -12,10 +12,10 @@
             <p-galleria [value]="imagenesGaleria()"  [responsiveOptions]="responsiveOptions" [showThumbnailNavigators]="false" class="bgThumbnail" [containerStyle]="{ 'max-width': '500px'}"
             [numVisible]="5" [showItemNavigators]="false" [showThumbnails]="true">
             <ng-template #item let-item>
-              <img [src]="item.itemImageSrc" [alt]="item.nombre" loading="lazy" class="w-full" />
+              <img [src]="item.itemImageSrc" width="400" height="500" [alt]="item.nombre" loading="lazy" class="w-full aspect-[1]" />
             </ng-template>
             <ng-template #thumbnail let-item >
-              <img [src]="item.thumbnailImageSrc" [alt]="item.nombre" loading="lazy" class="w-[80%] mx-auto"  />
+              <img [src]="item.thumbnailImageSrc" width="400" height="500" [alt]="item.nombre" loading="lazy" class="w-[80%] mx-auto aspect-[1]"  />
             </ng-template>
           </p-galleria>
         </div>
@@ -76,7 +76,7 @@
           <h2 class="text-lg font-semibold">Abre tu app Yape y scanea este codigo</h2>
           <h2 class="text-xl font-bold flex justify-center gap-1">Total a pagar <span class="text-green-400">{{precioFormateado}}</span></h2>
         </div>
-        <img src="/img/imgDetalleProduct/qrnew.webp" loading="lazy" class=" mt-1 mx-auto" alt="">
+        <img src="/img/imgDetalleProduct/qrnew.webp" width="400" height="500" loading="lazy" class=" mt-1 mx-auto" alt="">
         <div class="w-full flex justify-center">
           <a href="https://w.app/yv1iy3" class="w-full flex justify-center">
             <button pButton pRipple type="button" aria-label="Pago con QR" class="w-[90%] mt-3 font-semibold text-2xl">
