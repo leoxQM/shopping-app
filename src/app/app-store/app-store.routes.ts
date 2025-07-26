@@ -12,19 +12,19 @@ export const appStoreRoutes: Routes = [
     children: [
       {
         path: '',
-        component: HommeProductsComponent,
+        loadComponent: () => import('./pages/home-producto/homme-products.component').then((m)=>m.HommeProductsComponent)
       },
       {
         path: 'product/:id',
-        component: DetalleProductoComponent,
+        loadComponent: () => import('./pages/detalle-producto/detalle-producto.component').then((m)=>m.DetalleProductoComponent)
       },
       {
         path: 'carrito',
-        component: CarritoProductoComponent,
+        loadComponent: () => import('./pages/carrito-producto/carrito-producto.component').then((m)=>m.CarritoProductoComponent)
       },
       {
         path: '**',
-        component: NotfoundPageComponent,
+        loadComponent: () => import('./pages/notfound-page/notfound-page.component').then((m)=>m.NotfoundPageComponent),
       },
     ],
   },
@@ -34,4 +34,3 @@ export const appStoreRoutes: Routes = [
   },
 ];
 
-export default appStoreRoutes
