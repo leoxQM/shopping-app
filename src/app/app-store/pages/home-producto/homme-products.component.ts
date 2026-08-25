@@ -8,7 +8,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DetalleProductoComponent } from '../detalle-producto/detalle-producto.component';
-import { CarritoProductoComponent } from "../carrito-producto/carrito-producto.component";
 import { CarritoService } from '../../../@core/servicios/carrito.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
@@ -27,12 +26,10 @@ export class HommeProductsComponent implements OnInit{
   private carritoService = inject(CarritoService);
 
   allProducts = signal<Product[]>([]);
+  totalResgistros = signal(0);
   first = signal(0);
-  rows = signal(6);
-  productSeleccionado = signal<Product|null>(null)
-  pagedProducts = computed(()=>
-    this.allProducts().slice(this.first(), this.first()+this.rows())
-  );
+  tamanioPagina = signal(6)
+  productSeleccionado = signal<Product | null>(null)
 
   ngOnInit(): void {
     this.listProducct();
@@ -40,22 +37,30 @@ export class HommeProductsComponent implements OnInit{
 
   O_SelectProduct(product: Product){
     this.productSeleccionado.set(product);
-    this.router.navigate(['/product',product.id]);
+    this.router.navigate(['/ShoppingApp/product',product.id]);
   }
 
   O_AddToCar(product: Product){
     this.carritoService.agregarProducto(product)
   }
+
   listProducct(){
-    this.productService.getProducts().subscribe({
-      next: (data) => this.allProducts.set(data),
+    const pagina = this.first() / this.tamanioPagina();
+    this.productService.obtenerProductos(pagina, this.tamanioPagina( )).subscribe({
+      next:  (data) => {
+        this.allProducts.set(data.content),
+        this.totalResgistros.set(data.totalElements)
+        console.log(this.allProducts(), 'data')
+      },
       error:(err)=> console.error('error al cargar la pagina',err)
     });
   }
+
   onPageChange(event: PaginatorState){
     this.first.set(event.first ?? 0);
-    this.rows.set(event.rows ?? 6);
-    this.scrollTop()
+    this.tamanioPagina.set(event.rows ?? 6);
+    this.listProducct()
+    //this.scrollTop()
   }
 
   scrollTop() {

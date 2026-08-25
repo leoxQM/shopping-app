@@ -1,15 +1,16 @@
-import { Component, inject, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
+import { Component, computed, inject, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
 import { Button } from 'primeng/button';
 import { usePreset } from '@primeng/themes';
 import MyPreset from '../../../mypreset';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ToggleSwitch } from 'primeng/toggleswitch';
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { AvatarModule } from 'primeng/avatar';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { CarritoService } from '../../../@core/servicios/carrito.service';
 import { Tooltip } from 'primeng/tooltip';
+import { AuthService } from '../../../@core/servicios/auth.service';
 @Component({
   selector: 'app-navbar',
   imports: [
@@ -18,16 +19,27 @@ import { Tooltip } from 'primeng/tooltip';
     ReactiveFormsModule,
     ToggleSwitch,
     NgClass,
-    OverlayBadgeModule
-  ],
+    OverlayBadgeModule,
+    NgStyle
+],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit, OnChanges {
+
   private carritoService = inject(CarritoService);
+  private authService = inject(AuthService)
+  private router = inject(Router);
+
+  estaLogueado = computed(() => this.authService.usuarioActual() !== null);
+  usuarioActual = computed(()=>this.authService.usuarioActual());
+
   darkMode: boolean = false;
   formGroup!: FormGroup;
   cantidadProductos = this.carritoService.cantidadProductos;
+  isLogin = signal('')
+
+
   ngOnInit(): void {
     this.formData();
     this.listenToToggle();
@@ -43,6 +55,11 @@ export class NavbarComponent implements OnInit, OnChanges {
     });
   }
 
+  cerrarSesion(){
+    this.authService.logout();
+    this.router.navigate(['/ShoppingApp'])
+  }
+
   listenToToggle() {
     this.formGroup.get('checked')?.valueChanges.subscribe((isDark) => {
       if (isDark) {
@@ -51,6 +68,11 @@ export class NavbarComponent implements OnInit, OnChanges {
         document.documentElement.classList.remove('my-app-dark');
       }
     });
+  }
+
+  formatear(valor: string | null | undefined): string {
+    if (!valor) return '';
+    return valor!.charAt(0).toUpperCase() + valor.slice(1).toLowerCase();
   }
 
   //otro modo dark

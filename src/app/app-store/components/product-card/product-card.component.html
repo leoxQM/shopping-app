@@ -9,7 +9,7 @@
         <ng-template #header>
           <div class="relative h-[220px] min-w-auto overflow-hidden">
             <img [alt]="product.nombre" fetchpriority="high" loading="eager" decoding="async" class="w-full h-full object-cover"
-              [src]="product.imagen" />
+              [src]="obtenerImagenUrl(product.imagen)" />
             <p-tag [value]="product.stock! > 10 ? 'Disponible' : (product.stock! > 0 ? 'Pocas unidades' : 'Agotado')"
               [severity]="getSeverity(product.stock! > 10 ? 'INSTOCK' : (product.stock! > 0 ? 'LOWSTOCK' : 'OUTOFSTOCK'))"
               class="absolute top-2 left-2" />
@@ -17,7 +17,7 @@
         </ng-template>
         <ng-template #title>
           <h2 class="text-lg font-semibold">
-            <a [routerLink]="['/product', product.id]" class="md:hover:text-green-300">
+            <a [routerLink]="['/ShoppingApp/product', product.id]" class="md:hover:text-green-300">
               {{ product.nombre }}
             </a>
           </h2>

@@ -8,14 +8,14 @@
           <div
             class="flex sm:items-center p-4 gap-4  bgProductCar rounded-2xl shadow-md lg:hover:shadow-lg transition-shadow duration-300 bg-white">
             <div class="md:w-40 relative">
-              <img loading="lazy" class="block mx-auto rounded-lg w-full" [src]="item.imagen"
+              <img loading="lazy" class="block mx-auto rounded-lg w-full" [src]="obtenerImagenUrl(item.imagen)"
                 [alt]="item.nombre" />
               <p-tag [value]="getStockStatus(item.stock!)" [severity]="getSeverity(item.stock!)"
                 class="absolute top-1 left-1" />
             </div>
             <div class="flex justify-between flex-1 gap-6">
               <div class="flex flex-col gap-1">
-                <h2 [routerLink]="['/product', item.id]" class="text-2xl text-green-600 font-semibold cursor-pointer">{{
+                <h2 [routerLink]="['/ShoppingApp/product', item.id]" class="text-2xl text-green-600 font-semibold cursor-pointer">{{
                   item.nombre }}</h2>
                 <p class="text-base">{{ item.descripcion }}</p>
                 <div class="mt-1">
@@ -91,7 +91,7 @@
 <div class="flex flex-col xl:hidden relative">
 @for (item of products(); track item.id; let i = $index) {
   <div class="card  w-[90%] md:w-[70%] lg:w-[50%] bgProductCar bg-white rounded-2xl m-4 mx-auto mb-5">
-    <h1 [routerLink]="['/product', item.id]" class="text-2xl text-green-600 font-bold m-3 cursor-pointer"> {{item.nombre}} </h1>
+    <h1 [routerLink]="['/ShoppingApp/product', item.id]" class="text-2xl text-green-600 font-bold m-3 cursor-pointer"> {{item.nombre}} </h1>
     <div class="flex justify-between w-full m-3">
       <div class="flex flex-col gap-2">
         <h2 class="text-3xl font-bold"> S/{{item.precio}} </h2>
@@ -118,7 +118,7 @@
       </div>
     </div>
     <div class="w-full h-full object-cover flex justify-center sm:ml-20">
-      <img loading="lazy" [src]="item.imagen" class="w-[70%] sm:w-[40%] mt-5" alt="">
+      <img loading="lazy" [src]="obtenerImagenUrl(item.imagen)" class="w-[70%] sm:w-[40%] mt-5" alt="">
     </div>
   </div>
 </div>
@@ -174,7 +174,7 @@
   </div>
   <img src="/img/imgDetalleProduct/qrnew.webp" class=" mt-1 mx-auto" alt="">
   <div class="w-full flex justify-center">
-    <a href="https://w.app/yv1iy3" class="w-full flex justify-center">
+    <a [href]="'https://wa.me/958553252?text='+msjWsp()" target="_blank" class="w-full flex justify-center">
       <button pButton pRipple type="button" class="w-[90%] mt-3 font-semibold text-2xl">
         <i class="pi pi-check-circle mt-1" style="font-size: 1rem"></i>
         Enviar captura</button>

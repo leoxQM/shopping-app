@@ -1,0 +1,18 @@
+:host ::ng-deep .p-fileupload-header {
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border: none;
+}
+:host ::ng-deep p-fileupload .p-progressbar {
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border: none;
+}
+
+:host ::ng-deep .p-fileupload-content {
+  border: none;
+}

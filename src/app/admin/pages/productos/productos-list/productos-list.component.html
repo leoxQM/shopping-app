@@ -1,0 +1,115 @@
+<div class="flex w-full justify-center items-center">
+  <div class="card w-[95%] mt-10">
+    <p-toast />
+    <p-toolbar styleClass="mb-6">
+      <ng-template #start>
+        <p-button label="Agregar Producto" icon="pi pi-plus" class="mr-2" (onClick)="showDialog()" />
+        @if(!isUser()){
+          <p-button severity="danger" label="Eliminar" icon="pi pi-trash" outlined (onClick)="confirmarEliminacionMultiple()" [disabled]="selectProducts()?.length===0" />
+        }
+      </ng-template>
+
+      <ng-template #end>
+        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" auto
+          customUpload class="mr-2 inline-block" [chooseButtonProps]="{ severity: 'secondary' }" />
+        <p-button label="Export" icon="pi pi-upload" severity="secondary" />
+      </ng-template>
+    </p-toolbar>
+
+    <p-table #dt
+      [value]="products()"
+      [rows]="10"
+      [lazy]="true"
+      [paginator]="true"
+      [totalRecords]="totalRegistro()"
+      (onLazyLoad)="onLazyLoad($event)"
+      [tableStyle]="{ 'min-width': '80rem' }"
+      [rowHover]="true"
+      [(selection)]="selectProducts"
+      currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} registros"
+      [globalFilterFields]="['nombre', 'categoria', 'descripcion']"
+      [showCurrentPageReport]="true">
+      <ng-template #caption>
+        <div class="flex items-center justify-between">
+          <h5 class="m-0 text-xl font-bold">Administrar productos</h5>
+          <p-iconfield>
+            <p-inputicon styleClass="pi pi-search" />
+            <input pInputText type="text" placeholder="Buscar" (input)="onBuscar($any($event.target).value)"/>
+          </p-iconfield>
+        </div>
+      </ng-template>
+      <ng-template #header let-product>
+        <tr>
+          @if (!isUser()) {
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox />
+            </th>
+          }
+          <th>Categoria</th>
+          <th pSortableColumn="name">
+            Nombre
+            <!-- <p-sortIcon field="name" /> -->
+          </th>
+          <th>Imagen</th>
+          <th pSortableColumn="price">
+            Descripcion
+            <!-- <p-sortIcon field="price" /> -->
+          </th>
+          <th pSortableColumn="category" style="width: 6rem">
+            Stock
+            <!-- <p-sortIcon field="category" /> -->
+          </th>
+          <th pSortableColumn="category" style="width: 6rem">
+            Precio
+            <!-- <p-sortIcon field="category" /> -->
+          </th>
+          <th pSortableColumn="rating" style="width: 10rem">
+            Tallas
+            <!-- <p-sortIcon field="rating" /> -->
+          </th>
+          <th pSortableColumn="inventoryStatus" style="width: 8rem">
+            Colores
+            <!-- <p-sortIcon field="inventoryStatus" /> -->
+          </th>
+          @if (!isUser()) {
+            <th style="min-width: 9rem"></th>
+          }
+        </tr>
+      </ng-template>
+      <ng-template #body let-product>
+        <tr>
+          @if (!isUser()) {
+            <td style="width: 3rem">
+              <p-tableCheckbox [value]="product" />
+            </td>
+          }
+          <td style="min-width: 8rem"> {{ formatear(product.categoria) }} </td>
+          <td style="min-width: 12rem">{{ formatear(product.nombre) }}</td>
+          <td>
+            <img [src]="obtenerImagenUrl(product.imagen)" style="width: 64px" class="rounded" />
+          </td>
+          <td style="min-width: 12rem">{{ formatear(product.descripcion) }}</td>
+          <td>{{ product.stock }}</td>
+          <td>S/{{ product.precio }}</td>
+          <td>
+            {{ product.tallas.join(' ') | uppercase}}
+          </td>
+          <td style="white-space: pre-line;">
+            {{formatear(product.colores) }}
+          </td>
+          @if(!isUser()){
+            <td>
+              <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="onEditarClick(product)"/>
+              <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (onClick)="onEliminarClick(product)"/>
+            </td>
+          }
+        </tr>
+      </ng-template>
+      <!-- <ng-template #summary>
+        <div class="flex items-center justify-between">En total hay {{totalRegistro()}} productos.</div>
+      </ng-template> -->
+    </p-table>
+  </div>
+</div>
+
+<p-confirmDialog [style]="{ width: '450px' }" />

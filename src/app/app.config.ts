@@ -8,6 +8,9 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import MyPreset from './mypreset';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './@core/interceptors/auth.interceptor';
+import { ConfirmationService } from 'primeng/api';
+import { errorInterceptor } from './@core/interceptors/error.interceptor';
 //import { MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
@@ -17,6 +20,8 @@ export const appConfig: ApplicationConfig = {
         provideHttpClient(
           withFetch(),
           withInterceptors([
+            authInterceptor,
+            errorInterceptor
         ])
         ),
         provideClientHydration(withEventReplay()),
@@ -29,5 +34,6 @@ export const appConfig: ApplicationConfig = {
               }
             }
         }),
+        ConfirmationService,
   ]
 };

@@ -1,0 +1,62 @@
+<p-dialog [(visible)]="usuarioDialog" (onHide)="closeDialog()" [style]="{ width: '550px' }" header="Usuario" [modal]="true">
+
+  <ng-template #content>
+    <form [formGroup]="frmData" class="flex flex-col gap-5">
+
+      <div class="flex flex-col items-center gap-3">
+        <img [src]="obtenerFotoActual()" class="w-24 h-24 rounded-full object-cover border" />
+        <p-fileupload
+          mode="basic"
+          chooseLabel="Cambiar foto"
+          accept="image/png,image/jpeg"
+          [maxFileSize]="1000000"
+          [auto]="false"
+          [customUpload]="true"
+          (onSelect)="onFotoSeleccionada($event)" />
+      </div>
+
+      <div>
+        <label class="block font-bold mb-2">Username</label>
+        <input type="text" pInputText formControlName="username" fluid />
+      </div>
+
+      @if (!esEdicion()) {
+        <div>
+          <label class="block font-bold mb-2">Contraseña</label>
+          <p-password formControlName="password" [feedback]="false" [toggleMask]="true" fluid />
+        </div>
+      }
+
+      <div>
+        <label class="block font-bold mb-2">Email</label>
+        <input type="text" pInputText formControlName="email" fluid />
+      </div>
+
+      <div>
+        <label class="block font-bold mb-2">Rol</label>
+        <p-select [options]="opcionesRol" appendTo="body" optionLabel="label" optionValue="value" formControlName="rol" fluid />
+      </div>
+
+      @if (esEdicion()) {
+        <div class="flex items-center gap-3">
+          <p-toggleswitch formControlName="activo" />
+          <label class="font-bold">Usuario activo</label>
+        </div>
+
+        <div [formGroup]="frmPassword">
+          <label class="block font-bold mb-2">Nueva contraseña (opcional)</label>
+          <p-password formControlName="nuevaPassword" [feedback]="false" [toggleMask]="true" placeholder="Dejar vacío para no cambiar" fluid />
+        </div>
+      }
+
+    </form>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Cancelar" icon="pi pi-times" text (onClick)="closeDialog()" />
+    <p-button label="Guardar" icon="pi pi-check" [loading]="guardando()" (onClick)="guardarUsuario()" />
+  </ng-template>
+
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }" />

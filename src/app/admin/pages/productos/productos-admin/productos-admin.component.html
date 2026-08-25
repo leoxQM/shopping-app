@@ -1,0 +1,10 @@
+<app-productos-list
+  [recargar]="contadorRecarga()"
+  (isShow)="onShowDialog($event)"
+  (productoParaEditar)="abrirParaEditar($event)"></app-productos-list>
+<app-productos-form
+  [(productDialog)]="showFormDialog"
+  [(productoEditando)]="productoParaEditar"
+  (productoGuardado)="onProductoGuardado()">
+</app-productos-form>
+<p-toast />

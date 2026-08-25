@@ -1,0 +1,122 @@
+<p-dialog [(visible)]="productDialog" (onHide)="closeDialog()" [style]="{ width: '650px' }" header="Producto" [modal]="true">
+
+  <ng-template #content>
+    <app-subir-imagen
+      [imagenesExistentes]="productoEditando()?.imagenes ?? []"
+      (archivosSeleccionados)="onImagenesSeleccionadas($event)"
+      (imagenEliminada)="onImagenExistenteEliminada($event)">
+    </app-subir-imagen>
+
+    <form [formGroup]="frmData">
+      <div class="flex flex-col gap-6">
+        <div>
+          <label for="name" class="block font-bold mb-3">Nombre</label>
+          <input type="text" pInputText id="name" formControlName="nombre" required autofocus fluid />
+          @if (frmData.get('nombre')?.invalid && frmData.get('nombre')?.touched) {
+            <small class="text-red-500" >El nombre es obligatorio</small>
+          }
+        </div>
+
+        <div>
+          <label for="description" class="block font-bold mb-3">Descripción</label>
+          <textarea id="description" pTextarea required rows="3" cols="20" formControlName="descripcion" fluid></textarea>
+          @if (frmData.get('descripcion')?.invalid && frmData.get('descripcion')?.touched) {
+            <small class="text-red-500" >La descripcion es obligatoria</small>
+          }
+        </div>
+
+        <div>
+          <span class="block font-bold mb-4">Categoría</span>
+          <p-select
+            inputId="categoria"
+            [options]="categorias()"
+            optionLabel="label"
+            optionValue="value"
+            formControlName="categoria"
+            (onChange)="onCategoriaChange($event.value)"
+            (onFilter)="onCategoriaEscrita($event.filter)"
+            [editable]="true"
+            [filter]="true"
+            placeholder="Selecciona o escribe una categoría nueva"
+            fluid />
+          @if (frmData.get('categoria')?.invalid && frmData.get('categoria')?.touched) {
+            <small class="text-red-500" >Seleccione categoria</small>
+          }
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-3">Colores</label>
+            <p-multiSelect [options]="colores()" optionLabel="label" optionValue="value" formControlName="colores"
+              display="chip" [filter]="true" placeholder="Selecciona colores" appendTo="body" (onFilter)="textoFiltradoColor.set($event.filter)"
+              fluid>
+              <ng-template #emptyfilter>
+                <div class="p-2 flex flex-col gap-2">
+                  <span class="text-sm text-gray-500">No se encontró "{{ textoFiltradoColor() }}"</span>
+                  <p-button label="Agregar como nuevo color" icon="pi pi-plus" size="small" (onClick)="agregarColorNuevo()" />
+                </div>
+              </ng-template>
+            </p-multiSelect>
+            @if (frmData.get('colores')?.invalid && frmData.get('colores')?.touched) {
+            <small class="text-red-500" >Seleccione color</small>
+          }
+          </div>
+          <div>
+            <label class="block font-bold mb-3">Tallas</label>
+            @if (tallasComoOpciones().length > 0) {
+            <p-multiSelect [options]="tallasComoOpciones()" optionLabel="label" optionValue="value" formControlName="tallas"
+              display="chip" [filter]="true" [disabled]="!disabledSelect()" placeholder="Selecciona tallas" (onFilter)="textoFiltradoTalla.set($event.filter)"
+              fluid>
+              <ng-template #emptyfilter>
+                <div class="p-2 flex flex-col gap-2">
+                  <span class="text-sm text-gray-500">No se encontró "{{ textoFiltradoTalla() }}"</span>
+                  <p-button label="Agregar como nueva talla" icon="pi pi-plus" size="small" (onClick)="agregarTallaNueva()" />
+                </div>
+              </ng-template>
+            </p-multiSelect>
+            @if (frmData.get('tallas')?.invalid && frmData.get('tallas')?.touched) {
+            <small class="text-red-500" >Seleccione talla</small>
+          }
+            } @else {
+            <input pInputText placeholder="Ej: Único, o S,M,L"
+              [disabled]="!disabledSelect()||this.frmData.get('categoria')?.invalid" (blur)="agregarTallasManual($event)" />
+            @if (!disabledSelect()||this.frmData.get('categoria')?.invalid) {
+            <small class="text-gray-500 block mb-2">
+              Seleccion una categoria para elegir talla
+            </small>
+            }@else {
+              <small class="text-gray-500 block mb-2">
+              Categoría nueva — ingresa las tallas manualmente, separadas por coma
+            </small>
+            }
+            }
+            </div>
+            </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="price" class="block font-bold mb-3">Precio</label>
+            <p-inputnumber id="price" formControlName="precio" mode="currency" currency="PEN" locale="es-PE" fluid />
+            @if (frmData.get('precio')?.invalid && frmData.get('precio')?.touched) {
+            <small class="text-red-500" >Seleccione precio</small>
+          }
+          </div>
+          <div>
+            <label for="quantity" class="block font-bold mb-3">Stock</label>
+            <p-inputnumber id="quantity" formControlName="stock" maxlength="4" fluid />
+            @if (frmData.get('stock')?.invalid && frmData.get('stock')?.touched) {
+            <small class="text-red-500" >Seleccione talla</small>
+          }
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Cancelar" icon="pi pi-times" text (onClick)="closeDialog()" />
+    <p-button label="Guardar" icon="pi pi-check" (onClick)="guardarProducto()" [disabled]="guardando()" [loading]="guardando()"/>
+  </ng-template>
+</p-dialog>
+<p-confirmDialog [style]="{ width: '450px' }" />

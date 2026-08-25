@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
-
 @font-face {
   font-family: 'Poppins';
   src: url('/fonts/Poppins-Regular.woff2') format('woff2');
@@ -97,4 +97,5 @@ p-splitbutton .p-splitbutton-button {
   border-color: #1e293b;
   box-shadow: #8b9ab5;
 }
+
 

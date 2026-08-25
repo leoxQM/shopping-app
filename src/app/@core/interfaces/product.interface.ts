@@ -11,3 +11,8 @@ export interface Product {
   imagenes?: string[];
   stock?: number;
 }
+
+export interface ArchivoConPreview {
+  file: File;
+  previewUrl: string;
+}

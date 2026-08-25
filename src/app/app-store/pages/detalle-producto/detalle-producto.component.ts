@@ -17,6 +17,7 @@ import { ToastService } from '../../../@core/servicios/messageService';
 import { mensajes } from '../../../@core/constantes/constantes';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
+import { construirImagen } from '../../../@core/utils/imagen.helper';
 
 @Component({
   selector: 'app-detalle-producto',
@@ -26,7 +27,7 @@ import { DialogModule } from 'primeng/dialog';
     InputTextModule,
     GalleriaModule,
     ReactiveFormsModule,
-    DialogModule
+    DialogModule,
   ],
   templateUrl: './detalle-producto.component.html',
   styleUrl: './detalle-producto.component.css',
@@ -46,7 +47,8 @@ export class DetalleProductoComponent implements OnInit {
   outline = signal<boolean>(this.localStorageService.get('outline') ?? true);
   visivleMessage = signal<boolean>(false);
   outlineMap = signal<Record<number, string>>({});
-  showQR = signal<boolean>(false)
+  showQR = signal<boolean>(false);
+  msjWsp = signal<string>(mensajes.mensajeWhatsApp);
 
   responsiveOptions = [
     {
@@ -66,7 +68,7 @@ export class DetalleProductoComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.obtenerProductById();
-    this.precioxCantidad();
+    // this.precioxCantidad();
   }
 
   createForm() {
@@ -78,16 +80,25 @@ export class DetalleProductoComponent implements OnInit {
   obtenerProductById() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.productService.getProductById(+id).subscribe((product) => {
+      this.productService.obtenerProductosXId(+id).subscribe((product) => {
         if (product) {
           this.producto = product;
           console.log('my data x Id', product);
-          const imagenes = (product.imagenes ?? []).map((img, index) => ({
-            itemImageSrc: img,
-            thumbnailImageSrc: img,
-            alt: `Imagen ${index + 1}`,
-            title: `Imagen ${index + 1}`,
-          }));
+          const tieneImagenes = product.imagenes && product.imagenes.length > 0;
+          const imagenes = tieneImagenes
+            ? (product.imagenes ?? []).map((img, index) => ({
+                itemImageSrc: construirImagen(img),
+                thumbnailImageSrc: construirImagen(img),
+                alt: `Imagen ${index + 1}`,
+                title: `Imagen ${index + 1}`,
+              }))
+            : [
+                {
+                  itemImageSrc: '/img/imgDetalleProduct/not-img.jpg',
+                  alt: 'Sin imagen disponible',
+                  title: 'Sin imagen disponible',
+                },
+              ];
           this.imagenesGaleria.set(imagenes);
         }
         this.existeProductoEnCarrito();
@@ -109,7 +120,7 @@ export class DetalleProductoComponent implements OnInit {
   existeProductoEnCarrito() {
     const productos = this.carritotoService.productos();
     const existeProduct = productos.some(
-      (item) => item.id === this.producto.id
+      (item) => item.id === this.producto.id,
     );
     existeProduct ? this.iconName.set(false) : this.iconName.set(true);
     existeProduct ? this.outline.set(false) : this.outline.set(true);
@@ -148,8 +159,8 @@ export class DetalleProductoComponent implements OnInit {
     return cantidad! > 10
       ? 'Disponible'
       : cantidad! > 0
-      ? 'Pocas unidades'
-      : 'Agotado';
+        ? 'Pocas unidades'
+        : 'Agotado';
   }
 
   getValueSeverity(): string {
@@ -170,13 +181,15 @@ export class DetalleProductoComponent implements OnInit {
   }
 
   precioxCantidad(): number {
-    const { cantidadProducto } = this.formData.value;
-    const price = this.producto.precio;
-    return price! * cantidadProducto;
+    const cantidadProducto = this.formData?.get('cantidadProducto')?.value ?? 0;
+    const precio = this.producto?.precio ?? 0;
+
+    return precio * cantidadProducto;
   }
 
   get precioFormateado(): string {
-    const total = this.precioxCantidad() ?? 0;
+    const total = this.precioxCantidad();
+
     return (
       'S/' +
       total.toLocaleString('en-US', {
@@ -186,8 +199,11 @@ export class DetalleProductoComponent implements OnInit {
     );
   }
 
-  pagarCompra(){
-    this.showQR.set(!this.showQR());
+  obtenerImagenUrl(ruta: string | undefined | null): string {
+    return construirImagen(ruta);
   }
 
+  pagarCompra() {
+    this.showQR.set(!this.showQR());
+  }
 }

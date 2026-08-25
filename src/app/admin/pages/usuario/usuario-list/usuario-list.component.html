@@ -1,0 +1,68 @@
+<div class="flex w-full justify-center items-center">
+  <div class="card w-[90%] mt-10">
+
+    <div class="flex justify-between items-center mb-4">
+      <h5 class="m-0 text-xl font-bold">Administrar Usuarios</h5>
+      <p-button label="Nuevo Usuario" icon="pi pi-plus" (onClick)="showDialog()" />
+    </div>
+
+    <p-table
+      [value]="usuarios()"
+      [lazy]="true"
+      [paginator]="true"
+      [rows]="10"
+      [totalRecords]="totalRegistros()"
+      [loading]="cargando()"
+      (onLazyLoad)="onLazyLoad($event)"
+      [tableStyle]="{ 'min-width': '60rem' }"
+      [rowHover]="true"
+      [showCurrentPageReport]="true">
+
+      <!-- <ng-template #caption>
+        <div class="flex items-center justify-end">
+          <p-iconfield>
+            <p-inputicon styleClass="pi pi-search" />
+            <input pInputText type="text" placeholder="Buscar..." (input)="onBuscar($any($event.target).value)" />
+          </p-iconfield>
+        </div>
+      </ng-template> -->
+
+      <ng-template #header>
+        <tr>
+          <th>Foto</th>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th style="min-width: 9rem"></th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-usuario>
+        <tr>
+          <td>
+            <img [src]="obtenerImagenUrl(usuario.fotoPerfil)" style="width: 48px; height: 48px;" class="rounded-full object-cover" />
+          </td>
+          <td>{{ usuario.username }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>
+            <p-tag [value]="usuario.rol" [severity]="usuario.rol === 'ADMIN' ? 'danger' : 'info'" />
+          </td>
+          <td>
+            <p-tag [value]="usuario.activo ? 'Activo' : 'Inactivo'" [severity]="usuario.activo ? 'success' : 'secondary'" />
+          </td>
+          <td>
+            <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (onClick)="onEditarClick(usuario)" />
+            <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (onClick)="onEliminarClick(usuario)" />
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #summary>
+        <div>En total hay {{ totalRegistros() }} usuarios.</div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-confirmDialog [style]="{ width: '450px' }" />

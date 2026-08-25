@@ -15,13 +15,14 @@ import { MessageService } from 'primeng/api';
 import { ToastService } from '../../../@core/servicios/messageService';
 import { mensajes } from '../../../@core/constantes/constantes';
 import { NgClass } from '@angular/common';
+import { construirImagen } from '../../../@core/utils/imagen.helper';
 
 
 @Component({
   selector: 'app-product-card',
   imports: [CardModule, ButtonModule, PaginatorModule, Tag, RouterLink],
   templateUrl: './product-card.component.html',
-  styleUrl: './product-card.component.css'
+  styleUrl: './product-card.component.css',
 })
 export class ProductCardComponent implements OnInit {
   private toastService = inject(ToastService);
@@ -32,7 +33,7 @@ export class ProductCardComponent implements OnInit {
   productoSeleccionado = output<Product>();
   productoCarrito = output<Product>();
   outlineMap = signal<Record<number, boolean>>(
-    this.localStorage.get('outlineMap') ?? {}
+    this.localStorage.get('outlineMap') ?? {},
   );
   visibleMessage = signal(false);
 
@@ -50,7 +51,7 @@ export class ProductCardComponent implements OnInit {
     const map: Record<number, boolean> = {};
     this.product().forEach((producto) => {
       const enCarrito = productosCarrito.some(
-        (p: Product) => p.id === producto.id
+        (p: Product) => p.id === producto.id,
       );
       map[producto.id!] = !enCarrito;
     });
@@ -107,5 +108,9 @@ export class ProductCardComponent implements OnInit {
       label: isInCarrito ? 'Quitar' : 'Agregar',
       severity: isInCarrito ? 'danger' : 'success',
     };
+  }
+
+  obtenerImagenUrl(ruta: string | undefined | null): string {
+    return construirImagen(ruta);
   }
 }

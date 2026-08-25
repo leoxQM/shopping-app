@@ -11,11 +11,12 @@ import { Form, FormArray, FormBuilder, FormGroup, ReactiveFormsModule } from '@a
 import { CarritoService } from '../../../@core/servicios/carrito.service';
 import { LocalStorageService } from '../../../@core/servicios/local-storage.service';
 import { ToastService } from '../../../@core/servicios/messageService';
-import { mensajes } from '../../../@core/constantes/constantes';
 import { DrawerModule } from 'primeng/drawer';
 import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
+import { construirImagen } from '../../../@core/utils/imagen.helper';
+import { mensajes } from '../../../@core/constantes/constantes';
 @Component({
   selector: 'app-carrito-producto',
   imports: [
@@ -32,12 +33,12 @@ import { DialogModule } from 'primeng/dialog';
   templateUrl: './carrito-producto.component.html',
   styleUrl: './carrito-producto.component.css',
 })
-export class CarritoProductoComponent implements OnInit {
+export class CarritoProducto implements OnInit {
   product = input<Product[]>();
   private carritoService = inject(CarritoService);
   private fb = inject(FormBuilder);
   formGroup!: FormGroup;
-
+  msjWsp = signal<string>(mensajes.mensajeWhatsApp)
   outlineMap = signal<Record<number, string>>({});
   verResumen: boolean = false;
   sumaPrecio: number = 0;
@@ -56,6 +57,7 @@ export class CarritoProductoComponent implements OnInit {
     this.agregarProductosAlFormulario();
     this.precioxProducto();
   }
+
   scrollTop() {
     if (typeof window !== 'undefined') {
       window.scrollTo(0, 0);
@@ -144,6 +146,10 @@ export class CarritoProductoComponent implements OnInit {
     if (accion === 'Restar' && valor > 1) {
       control?.setValue(valor - 1);
     }
+  }
+
+  obtenerImagenUrl(ruta: string | undefined | null): string {
+    return construirImagen(ruta);
   }
 
   pagarCompra(){

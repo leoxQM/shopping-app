@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CarritoProductoComponent } from './carrito-producto.component';
+import { SidebarAdminComponent } from './sidebar-admin.component';
 
-describe('CarritoProductoComponent', () => {
-  let component: CarritoProductoComponent;
-  let fixture: ComponentFixture<CarritoProductoComponent>;
+describe('SidebarAdminComponent', () => {
+  let component: SidebarAdminComponent;
+  let fixture: ComponentFixture<SidebarAdminComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CarritoProductoComponent]
+      imports: [SidebarAdminComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CarritoProductoComponent);
+    fixture = TestBed.createComponent(SidebarAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

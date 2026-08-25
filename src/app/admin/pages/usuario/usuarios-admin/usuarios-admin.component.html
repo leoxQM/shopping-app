@@ -1,0 +1,14 @@
+<app-usuarios-list
+  [recargar]="contadorRecarga()"
+  (isShow)="onShowDialog($event)"
+  (usuarioParaEditar)="abrirParaEditar($event)"></app-usuarios-list>
+
+<app-usuario-form
+  [(usuarioDialog)]="showFormDialog"
+  [(usuarioEditando)]="usuarioParaEditar"
+  (usuarioGuardado)="onUsuarioGuardado()">
+</app-usuario-form>
+
+
+
+

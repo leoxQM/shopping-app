@@ -1,0 +1,37 @@
+<p-toast />
+
+<div class="flex items-center justify-center min-h-[88vh]">
+  <div class="w-full max-w-md bgNavbar p-8 rounded-lg shadow-md card">
+
+    <h1 class="text-2xl font-bold mb-6 text-center">Iniciar sesión</h1>
+
+    <form [formGroup]="frmLogin" (ngSubmit)="iniciarSesion()" class="flex flex-col gap-5">
+
+      <div>
+        <label for="username" class="block font-bold mb-2">Usuario</label>
+        <input type="text" pInputText id="username" formControlName="username" [class.ng-invalid]="esInvalido('username')"
+          [class.ng-dirty]="esInvalido('username')" fluid autofocus />
+        @if (esInvalido('username')) {
+        <small class="text-red-500">El usuario es obligatorio</small>
+        }
+      </div>
+
+      <div>
+        <label for="password" class="block font-bold mb-2">Contraseña</label>
+        <p-password inputId="password" formControlName="password" [feedback]="false" [toggleMask]="true"
+          [styleClass]="esInvalido('password') ? 'ng-invalid ng-dirty' : ''" fluid />
+        @if (esInvalido('password')) {
+        <small class="text-red-500">La contraseña es obligatoria</small>
+        }
+      </div>
+
+      <p-button
+        type="submit"
+        label="Ingresar"
+        icon="pi pi-sign-in"
+        [loading]="cargando()"
+        styleClass="w-full mt-2" />
+
+    </form>
+  </div>
+</div>
