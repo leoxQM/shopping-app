@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { LoginRequest, LoginResponse, UsuarioSesion } from '../interfaces/auth.interface';
 import { LocalStorageService } from './local-storage.service';
 import { tokenExpirado } from '../utils/jwt.helper';
@@ -65,4 +65,5 @@ export class AuthService {
     this.localStorageService.remove(this.USER_KEY);
     this.usuarioActual.set(null);
   }
+
 }
