@@ -6,12 +6,12 @@ const appStore = environmentProd.apiAppStore; //produccion
 
 const controllerProducts: string = appStore+'productos';
 const controllerUsuarios: string = appStore + 'usuarios';
-const controllerAuth: string = environment.apiAuth;
+const controllerAuth: string = environmentProd.apiAuth;
 
 export const constantesApiStore = {
   obtenerProductos: controllerProducts,
   obtenerXCategoria: controllerProducts+'/categoria/',
-  baseImagenes: environment.baseImagenes,
+  baseImagenes: environmentProd.baseImagenes,
   obtenerUsuarios: controllerUsuarios,
   registrarUsuario: controllerAuth + 'register'
 }
