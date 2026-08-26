@@ -41,7 +41,7 @@ export class UsuarioService {
   }
 
   actualizarFoto(id: number, foto: File): Observable<Usuario> {
-    const url = `${constantesApiStore.subirImagen}/${id}/foto`;
+    const url = `${constantesApiStore.subirImagen}${id}/foto`;
     const formData = new FormData();
     formData.append('file', foto);
     return this.http.post<Usuario>(url, formData);
