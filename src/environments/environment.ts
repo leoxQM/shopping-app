@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
-    aplicativosWeb8: 'https://aplicativosweb8.sunafil.gob.pe/',
-    aplicativosweb5: 'https://aplicativosweb5.sunafil.gob.pe/'
+    apiAppStore: 'https://leostore-back.onrender.com/api/appstore/',
+    apiAuth: 'https://leostore-back.onrender.com/auth/',
+    baseImagenes: 'https://leostore-back.onrender.com/uploads/'
   };

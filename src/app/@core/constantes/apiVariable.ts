@@ -1,6 +1,8 @@
 import { environment } from "../../../environments/environment.development";
+import { environment as environmentProd } from "../../../environments/environment";
 
-const appStore = environment.apiAppStore;
+//const appStore = environment.apiAppStore; //desarrollo
+const appStore = environmentProd.apiAppStore; //produccion
 
 const controllerProducts: string = appStore+'productos';
 const controllerUsuarios: string = appStore + 'usuarios';
