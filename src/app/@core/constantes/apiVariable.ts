@@ -11,7 +11,8 @@ const controllerAuth: string = environmentProd.apiAuth;
 export const constantesApiStore = {
   obtenerProductos: controllerProducts,
   obtenerXCategoria: controllerProducts+'/categoria/',
-  baseImagenes: environmentProd.baseImagenes,
+  subirImagen: environmentProd.baseImagenes,
+  baseImagenes: environmentProd.baseImagenes+'uploads/',
   obtenerUsuarios: controllerUsuarios,
   registrarUsuario: controllerAuth + 'register'
 }
