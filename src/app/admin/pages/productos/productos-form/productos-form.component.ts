@@ -81,7 +81,12 @@ export class ProductosFormComponent implements OnInit {
   constructor() {
     effect(() => {
       const producto = this.productoEditando();
+      const estaAbierto = this.productDialog();
+
+      if (!estaAbierto) return;
+
       this.cargarCategoriaYColores();
+
       if (producto) {
         this.categoriaSeleccionada.set(producto.categoria!);
         this.frmData?.patchValue({
