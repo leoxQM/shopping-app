@@ -81,6 +81,7 @@ export class ProductosFormComponent implements OnInit {
   constructor() {
     effect(() => {
       const producto = this.productoEditando();
+      this.cargarCategoriaYColores();
       if (producto) {
         this.categoriaSeleccionada.set(producto.categoria!);
         this.frmData?.patchValue({
@@ -114,7 +115,7 @@ export class ProductosFormComponent implements OnInit {
       tallas: [{ value: '', disabled: false }, [Validators.required]],
       colores: [{ value: '', disabled: false }, [Validators.required]],
     });
-    this.cargarCategoriaYColores();
+    //this.cargarCategoriaYColores();
   }
 
   cargarCategoriaYColores() {
