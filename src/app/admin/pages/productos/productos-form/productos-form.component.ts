@@ -81,7 +81,9 @@ export class ProductosFormComponent implements OnInit {
   constructor() {
     effect(() => {
       const producto = this.productoEditando();
-      
+      const estaAbierto = this.productDialog();
+
+      if (!estaAbierto) return;
 
       this.cargarCategoriaYColores();
 
