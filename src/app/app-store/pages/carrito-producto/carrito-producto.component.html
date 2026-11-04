@@ -88,7 +88,7 @@
 </div>
 
 <!-- diseño móvil -->
-<div class="flex flex-col xl:hidden relative">
+<div class="flex flex-col max-xl:mt-32 xl:hidden relative">
 @for (item of products(); track item.id; let i = $index) {
   <div class="card  w-[90%] md:w-[70%] lg:w-[50%] bgProductCar bg-white rounded-2xl m-4 mx-auto mb-5">
     <h1 [routerLink]="['/ShoppingApp/product', item.id]" class="text-2xl text-green-600 font-bold m-3 cursor-pointer"> {{item.nombre}} </h1>
@@ -174,7 +174,7 @@
   </div>
   <img src="/img/imgDetalleProduct/qrnew.webp" class=" mt-1 mx-auto" alt="">
   <div class="w-full flex justify-center">
-    <a [href]="'https://wa.me/958553252?text='+msjWsp()" target="_blank" class="w-full flex justify-center">
+    <a [href]="'https://wa.me/51958553252?text='+msjWsp()" target="_blank" class="w-full flex justify-center">
       <button pButton pRipple type="button" class="w-[90%] mt-3 font-semibold text-2xl">
         <i class="pi pi-check-circle mt-1" style="font-size: 1rem"></i>
         Enviar captura</button>

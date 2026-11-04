@@ -1,11 +1,11 @@
 <div class="w-full">
   <div [ngClass]="estaLogueado() ? 'md:w-[97%]':'md:w-[70%]'" class="w-[90%] my-6  flex justify-between items-center mx-auto">
-    <div  class="text-2xl font-bold cursor-pointer text-current border-0 focus:outline-none focus:ring-0 font-sans" routerLink="/ShoppingApp">Shopping <span class="text-green-500">App</span></div>
-    <div class="flex gap-4">
+    <div  class="text-xl xl:text-2xl font-bold cursor-pointer text-current border-0 focus:outline-none focus:ring-0 font-sans" routerLink="/ShoppingApp">Shopping <span class="text-green-500">App</span></div>
+    <div class="flex gap-4 xl:gap-6">
       <div class="card flex justify-center items-center gap-4">
         <label class="sr-only" for="themeToggle">Cambiar tema claro/oscuro</label>
         <form [formGroup] ="formGroup">
-          <p-toggleswitch formControlName="checked" styleClass="scale-155 mt-2 mr-2">
+          <p-toggleswitch formControlName="checked" styleClass="scale-110 mt-2 xl:scale-155 xl:mr-2">
             <ng-template #handle let-checked="checked">
               <i [ngClass]="['!text-xs', 'pi', !checked ? 'pi-moon' : 'pi-sun']"></i>
             </ng-template>
@@ -13,11 +13,11 @@
         </form>
       </div>
       @if (cantidadProductos() > 0) {
-        <p-overlayBadge [value]="cantidadProductos()" severity="danger" class="inline-flex">
-          <p-button icon="pi pi-cart-minus" routerLink="/ShoppingApp/carrito" aria-label="Ir al carrito"/>
+        <p-overlayBadge [value]="cantidadProductos()" severity="danger"  class="inline-flex max-xl:scale-90">
+          <p-button icon="pi pi-cart-minus" routerLink="/ShoppingApp/carrito"  aria-label="Ir al carrito"/>
         </p-overlayBadge>
       } @else {
-        <p-button icon="pi pi-cart-minus" routerLink="/ShoppingApp/carrito" aria-label="Ir al carrito"/>
+        <p-button icon="pi pi-cart-minus"  styleClass="max-xl:scale-90" routerLink="/ShoppingApp/carrito" aria-label="Ir al carrito"/>
       }
       <div class="flex items-center gap-3">
         @if (estaLogueado()) {
@@ -30,8 +30,10 @@
         </div>
         <p-button icon="pi pi-sign-out" [outlined]="true" label="Cerrar sesión" (onClick)="cerrarSesion()" />
         } @else {
-        <p-button icon="pi pi-user" [outlined]="true" label="Iniciar sesión" routerLink="/ShoppingApp/login" />
-        }
+        <p-button icon="pi pi-user" [outlined]="true" class="hidden xl:flex" label="Iniciar sesión" routerLink="/ShoppingApp/login" />
+        <p-button icon="pi pi-user" [outlined]="true" class="flex xl:hidden" routerLink="/ShoppingApp/login" />
+
+      }
       </div>
     </div>
   </div>

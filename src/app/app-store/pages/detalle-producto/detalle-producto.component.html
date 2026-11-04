@@ -1,10 +1,10 @@
 @if (producto) {
 <h1 class="sr-only">Detalle del producto {{producto.nombre}}</h1>
 <div class="w-full">
-    <div class="w-[90%] sm:w-[60%] lg:w-[90%] xl:w-[70%] mx-auto gap-5 grid grid-cols-1 lg:grid-cols-2 mb-3 lg:py-20">
+    <div class="w-[90%] sm:w-[60%] lg:w-[90%] xl:w-[70%] mx-auto gap-5 grid grid-cols-1 lg:grid-cols-2 max-xl:mt-32 mb-3 lg:py-20">
       <div class="flex lg:hidden flex-col gap-5">
           <h1 class="text-3xl lg:text-4xl font-bold">{{producto.nombre}}</h1>
-          <h2 class="text-4xl lg:text-3xl font-bold">{{producto.moneda}}{{producto.precio}}</h2>
+          <h2 class="text-4xl lg:text-3xl font-bold">S/ {{producto.precio}}</h2>
         </div>
         <div class="w-[90%] mx-auto">
           <!-- <img src="/img/imgDetalleProduct/no-image.jpg" alt="" class="lg:w-[90%]"> -->
